@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rag-firewall"
-version = "0.4.0"
+version = "0.4.1"
 description = "Client-side retrieval firewall for RAG systems — blocks prompt injection and secret leaks, re-ranks stale or untrusted content, and keeps all data inside your environment."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
@@ -24,9 +24,13 @@ dev = [
   "networkx>=3.2"
 ]
 
+[tool.setuptools.package-data]
+"rag_firewall" = ["schema/*.json"]
+
 [project.urls]
 Homepage = "https://github.com/taladari/rag-firewall"
 Repository = "https://github.com/taladari/rag-firewall"
 
 [project.scripts]
 ragfw = "rag_firewall.cli:main"
+

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1] - 2025-09-02
+### Added
+- Schema validation (optional, via jsonschema)
+- URL scanner hardening (IP/punycode)
+- Secrets patterns extended
+- Tests
+
+
 ## [0.4.0] - 2025-08-30
 ### Added
 - GraphRAG support:

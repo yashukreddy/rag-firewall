@@ -7,7 +7,13 @@ PATTERNS=[(r"AKIA[0-9A-Z]{16}","aws_access_key"),(r"ASIA[0-9A-Z]{16}","aws_temp_
 (r"ghp_[A-Za-z0-9]{36}","github_token"),(r"AIza[0-9A-Za-z\-_]{35}","google_api_key"),
 (r"xox[abp]-\d{10,}-\d{10,}-[A-Za-z0-9-]{24,}","slack_token"),(r"sk-[A-Za-z0-9]{32,}","generic_sk_token"),
 (r"(?i)bearer\s+[A-Za-z0-9\-_\.=]{20,}","bearer_token"),
-(r"-----BEGIN (?:RSA|OPENSSH|EC) PRIVATE KEY-----","private_key")]
+(r"-----BEGIN (?:RSA|OPENSSH|EC) PRIVATE KEY-----","private_key"),
+# Additional high-signal patterns
+(r"hf_[A-Za-z0-9]{30,}","huggingface_token"),
+(r"dapi[a-zA-Z0-9]{24}","databricks_token"),
+(r"https://hooks\.slack\.com/services/[A-Za-z0-9/+]{20,}","slack_webhook"),
+(r"(?i)azure[_\s-]key[vV]ault|AZURE_[A-Z0-9_]{8,}","azure_secret_suspect"),
+(r"secret_[A-Za-z0-9]{32,}","generic_secret_token")]
 class SecretsScanner:
     def __init__(self, extra_patterns=None):
         import regex as re

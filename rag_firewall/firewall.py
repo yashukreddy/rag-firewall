@@ -18,6 +18,26 @@ class Firewall:
         with open(path,"r",encoding="utf-8") as f:
             if not yaml: raise RuntimeError("PyYAML is required to load YAML configs.")
             cfg=yaml.safe_load(f)
+        # Optional JSON Schema validation if jsonschema is available
+        try:
+            import json
+            from importlib.resources import files
+            import jsonschema  # type: ignore
+            schema_path = files("rag_firewall").joinpath("schema/firewall.schema.json")
+            with open(schema_path, "r", encoding="utf-8") as sf:
+                schema = json.load(sf)
+            jsonschema.validate(instance=cfg, schema=schema)
+        except ModuleNotFoundError:
+            # jsonschema not installed; skip validation gracefully
+            pass
+        except Exception as ve:
+            # If validation fails, surface a clear error
+            try:
+                import jsonschema  # noqa: F401
+                raise ValueError(f"Invalid firewall config: {getattr(ve, 'message', str(ve))}") from ve
+            except Exception:
+                # Unknown error during validation; continue without blocking
+                pass
         scanners=[]
         from .scanners.regex_scanner import RegexInjectionScanner
         from .scanners.pii_scanner import PIIScanner
